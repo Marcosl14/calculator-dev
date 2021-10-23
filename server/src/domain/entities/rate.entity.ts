@@ -1,96 +1,93 @@
-import shortId from 'shortid';
 import Technology from './technology.entity';
 import LanguageEnum from '../enums/language.enum';
 import SeniorityEnum from '../enums/seniority.enum';
 
-class Rate {
-  private _id: string;
-  private _technology: Technology;
-  private _seniority: SeniorityEnum;
-  private _languaje: LanguageEnum;
-  private _averageSalary: string;
-  private _grossMargin: string;
-  private _currency: string;
+export default class Rate {
+  private id: string | null = null;
+  private technology: Technology;
+  private seniority: SeniorityEnum;
+  private language: LanguageEnum;
+  private averageSalary: string;
+  private grossMargin: string;
+  private currency: string;
 
   constructor(
     technology: Technology,
     seniority: SeniorityEnum,
-    languaje: LanguageEnum,
+    language: LanguageEnum,
     averageSalary: string,
     grossMargin: string,
     currency: string,
   ) {
-    this._id = shortId.generate();
-    this._technology = technology;
-    this._seniority = seniority;
-    this._languaje = languaje;
-    this._averageSalary = averageSalary;
-    this._grossMargin = grossMargin;
-    this._currency = currency;
+    this.technology = technology;
+    this.seniority = seniority;
+    this.language = language;
+    this.averageSalary = averageSalary;
+    this.grossMargin = grossMargin;
+    this.currency = currency;
   }
 
-  public get id(): string {
-    return this._id;
+  public getId(): string | null {
+    return this.id;
   }
 
-  public set id(pid: string) {
-    this._id = pid;
+  public setId(pid: string) {
+    this.id = pid;
   }
 
-  public get technology(): Technology {
-    return this._technology;
+  public getTechnology(): Technology {
+    return this.technology;
   }
 
-  public set technology(ptechnology: Technology) {
-    this._technology = ptechnology;
+  public setTechnology(ptechnology: Technology) {
+    this.technology = ptechnology;
   }
 
-  public get seniority(): SeniorityEnum {
-    return this._seniority;
+  public getSeniority(): SeniorityEnum {
+    return this.seniority;
   }
 
-  public set seniority(pseniority: SeniorityEnum) {
-    this._seniority = pseniority;
+  public setSeniority(pseniority: SeniorityEnum) {
+    this.seniority = pseniority;
   }
 
-  public get languaje(): LanguageEnum {
-    return this._languaje;
+  public getLanguage(): LanguageEnum {
+    return this.language;
   }
 
-  public set languaje(planguaje: LanguageEnum) {
-    this._languaje = planguaje;
+  public setLanguage(planguage: LanguageEnum) {
+    this.language = planguage;
   }
 
-  public get averageSalary(): string {
-    return this._averageSalary;
+  public getAverageSalary(): string {
+    return this.averageSalary;
   }
 
-  public set averageSalary(paverageSalary: string) {
-    this._averageSalary = paverageSalary;
+  public setAverageSalary(paverageSalary: string) {
+    this.averageSalary = paverageSalary;
   }
 
-  public get grossMargin(): string {
-    return this._grossMargin;
+  public getGrossMargin(): string {
+    return this.grossMargin;
   }
 
-  public set grossMargin(pgrossMargin: string) {
-    this._grossMargin = pgrossMargin;
+  public setGrossMargin(pgrossMargin: string) {
+    this.grossMargin = pgrossMargin;
   }
 
-  public get currency(): string {
-    return this._currency;
+  public getCurrency(): string {
+    return this.currency;
   }
 
-  public set currency(pcurrency: string) {
-    this._currency = pcurrency;
+  public setCurrency(pcurrency: string) {
+    this.currency = pcurrency;
   }
 
   public getTotal(): number {
-    return parseFloat(this._grossMargin) + parseFloat(this._averageSalary);
+    return parseFloat(this.grossMargin) + parseFloat(this.averageSalary);
   }
 
   public getGrossMarginPercentage(): number {
-    return parseFloat(this._grossMargin) / this.getTotal();
+    return parseFloat(this.grossMargin) / this.getTotal();
   }
 }
-export default Rate;

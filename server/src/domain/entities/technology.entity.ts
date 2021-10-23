@@ -1,28 +1,28 @@
 import shortId from 'shortid';
 
 class Technology {
-  private _id: string;
-  private _name: string;
+  private id: string;
+  private name: string;
 
   constructor(name: string) {
-    this._id = shortId.generate();
-    this._name = name;
+    this.id = shortId.generate();
+    this.name = name;
   }
 
-  public get id(): string {
-    return this._id;
+  public getId(): string {
+    return this.id;
   }
 
-  public set id(pid: string) {
-    this._id = pid;
+  public setId(pid: string) {
+    this.id = pid;
   }
 
-  public get name(): string {
-    return this._name;
+  public getName(): string {
+    return this.name;
   }
 
-  public set name(pname: string) {
-    this._name = pname;
+  public setName(pname: string) {
+    this.name = pname;
   }
 }
 export default Technology;
