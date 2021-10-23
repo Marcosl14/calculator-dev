@@ -5,6 +5,7 @@ import expressWinston from 'express-winston';
 import winston from 'winston';
 import CommonRoutes from './http/routes/common.routes';
 import RatesRoutes from './http/routes/rates.routes';
+import SalaryRoutes from './http/routes/salary.routes';
 
 const app: express.Application = express();
 
@@ -26,6 +27,7 @@ app.use(cors());
 app.use(express.json());
 
 routes.push(new RatesRoutes(app));
+routes.push(new SalaryRoutes(app));
 
 app.listen(3000, () => {
   routes.forEach((route: CommonRoutes) => {
