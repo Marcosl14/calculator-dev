@@ -1,15 +1,12 @@
-import shortId from 'shortid';
-
 class Technology {
-  private id: string;
+  private id: string | null = null;
   private name: string;
 
   constructor(name: string) {
-    this.id = shortId.generate();
-    this.name = name;
+    this.name = name.toUpperCase();
   }
 
-  public getId(): string {
+  public getId(): string | null {
     return this.id;
   }
 
