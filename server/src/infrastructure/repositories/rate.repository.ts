@@ -16,6 +16,32 @@ class RateRepository {
     return rate ? rate : null;
   }
 
+  async filterBy(
+    technology?: string,
+    seniority?: SeniorityEnum,
+    language?: LanguageEnum,
+    currency?: string,
+  ): Promise<Rate[]> {
+    let rates: Array<Rate> = [...this.rates];
+
+    console.log(rates);
+
+    if (technology) {
+      rates = rates.filter(r => r.getTechnology().getName() === technology.toUpperCase());
+    }
+    if (seniority) {
+      rates = rates.filter(r => r.getSeniority() === seniority.toUpperCase());
+    }
+    if (language) {
+      rates = rates.filter(r => r.getLanguage() === language.toUpperCase());
+    }
+    if (currency) {
+      rates = rates.filter(r => r.getCurrency() === currency.toUpperCase());
+    }
+
+    return rates;
+  }
+
   async findAll(): Promise<Rate[]> {
     return this.rates;
   }
