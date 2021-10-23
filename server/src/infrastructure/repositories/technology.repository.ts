@@ -6,12 +6,6 @@ class TechnologyRepository {
 
   constructor() {
     this.techologies = [];
-
-    this.save(new Technology('Java'));
-    this.save(new Technology('Javascript'));
-    this.save(new Technology('C#'));
-
-    console.log(this.techologies);
   }
 
   async findOneById(id: string): Promise<Technology | null> {

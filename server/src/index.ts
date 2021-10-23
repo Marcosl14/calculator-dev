@@ -6,6 +6,7 @@ import winston from 'winston';
 import CommonRoutes from './http/routes/common.routes';
 import RatesRoutes from './http/routes/rates.routes';
 import SalaryRoutes from './http/routes/salary.routes';
+import TechnologiesRoutes from './http/routes/technologies.routes';
 
 const app: express.Application = express();
 
@@ -28,6 +29,7 @@ app.use(express.json());
 
 routes.push(new RatesRoutes(app));
 routes.push(new SalaryRoutes(app));
+routes.push(new TechnologiesRoutes(app));
 
 app.listen(3000, () => {
   routes.forEach((route: CommonRoutes) => {
