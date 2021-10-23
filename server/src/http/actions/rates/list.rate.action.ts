@@ -4,9 +4,9 @@ import rateRepository from '../../../infrastructure/repositories/rate.repository
 
 class ListRatesAction {
   async run(_req: Request, res: Response) {
-    const users: Rate[] = await rateRepository.findAll();
+    const rates: Rate[] = await rateRepository.findAll();
 
-    return res.status(200).json(users);
+    return res.status(200).json(rates);
   }
 }
 
