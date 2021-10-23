@@ -5,7 +5,11 @@ class TechnologyRepository {
   private techologies: Technology[];
 
   constructor() {
-    this.techologies = [new Technology('Java'), new Technology('Javascript'), new Technology('C#')];
+    this.techologies = [];
+
+    this.save(new Technology('Java'));
+    this.save(new Technology('Javascript'));
+    this.save(new Technology('C#'));
 
     console.log(this.techologies);
   }
