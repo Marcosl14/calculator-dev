@@ -7,7 +7,8 @@ import { CreateRateCommand } from '../../commands/rate/create.rate.command';
 
 class CreateRateHandler {
   async execute(command: CreateRateCommand) {
-    const technology = await technologyRepository.findOneById(command.getTechnology());
+    const technology = await technologyRepository.findOneByName(command.getTechnology());
+
     if (!technology) {
       throw new Error('Technology not found');
     }
