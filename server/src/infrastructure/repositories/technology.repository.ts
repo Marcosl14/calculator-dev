@@ -1,43 +1,29 @@
-import shortid from 'shortid';
+import { technologiesModel } from '../..';
 import Technology from '../../domain/entities/technology.entity';
 
 class TechnologyRepository {
-  private techologies: Technology[];
-
-  constructor() {
-    this.techologies = [];
-  }
-
-  async findOneById(id: string): Promise<Technology | null> {
-    const technology = this.techologies.find(t => t.getId() === id);
-    return technology ? technology : null;
-  }
-
   async findAll(): Promise<Technology[]> {
-    return this.techologies;
+    return technologiesModel.find({});
+  }
+
+  async findOneById(id: string): Promise<any | null> {
+    return technologiesModel.findById(id);
+  }
+
+  async findOneByName(name: string): Promise<any | null> {
+    return technologiesModel.findOne({ name });
   }
 
   async exists(name: string): Promise<boolean> {
-    const rate = this.techologies.find(t => t.getName() == name);
-    if (rate) {
-      return true;
-    }
-    return false;
+    return technologiesModel.exists({ name });
   }
 
   async save(technology: Technology): Promise<void> {
-    if (!technology.getId()) {
-      technology.setId(shortid.generate());
-      this.techologies.push(technology);
-    } else {
-      this.techologies = this.techologies.map(function (t) {
-        return t.getId() === technology.getId() ? technology : t;
-      });
-    }
+    technologiesModel.collection.insertOne({ name: technology.getName() }).catch(error => console.error(error));
   }
 
   async deleteById(id: string): Promise<void> {
-    this.techologies = this.techologies.filter(t => t.getId() !== id);
+    await technologiesModel.findByIdAndDelete(id);
   }
 }
 
