@@ -7,8 +7,30 @@ import CommonRoutes from './http/routes/common.routes';
 import RatesRoutes from './http/routes/rates.routes';
 import SalaryRoutes from './http/routes/salary.routes';
 import TechnologiesRoutes from './http/routes/technologies.routes';
+import mongoose from 'mongoose';
+import RateSchema from './infrastructure/repositories/schemas/rate.schema';
+import TechnologySchema from './infrastructure/repositories/schemas/technology.schema';
 
 const app: express.Application = express();
+
+mongoose.Promise = global.Promise;
+mongoose.connect(
+  'mongodb+srv://user:marquitos2701@marcoscluster.7gh8q.mongodb.net/calculator-dev?retryWrites=true&w=majority',
+);
+const db = mongoose.connection;
+
+db.on('error', function (err) {
+  console.log('connection error', err);
+  db.close();
+});
+
+db.once('open', function () {
+  console.log('Connection to DB successful');
+});
+
+const ratesModel = mongoose.model('rates', RateSchema, 'rates');
+const technologiesModel = mongoose.model('technologies', TechnologySchema, 'technologies');
+export { ratesModel, technologiesModel };
 
 const loggerOptions: expressWinston.LoggerOptions = {
   transports: [new winston.transports.Console()],
