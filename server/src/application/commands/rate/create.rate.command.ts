@@ -2,7 +2,7 @@ import LanguageEnum from '../../../domain/enums/language.enum';
 import SeniorityEnum from '../../../domain/enums/seniority.enum';
 
 export class CreateRateCommand {
-  private technologyId: string;
+  private technologyName: string;
   private seniority: SeniorityEnum;
   private language: LanguageEnum;
   private averageSalary: string;
@@ -10,23 +10,23 @@ export class CreateRateCommand {
   private currency: string;
 
   constructor(
-    pTechnologyId: string,
+    pTechnologyName: string,
     pSeniority: SeniorityEnum,
     pLanguage: LanguageEnum,
     pAverageSalary: string,
     pGrossMargin: string,
     pCurrency: string,
   ) {
-    this.technologyId = pTechnologyId;
+    this.technologyName = pTechnologyName.toUpperCase();
     this.seniority = pSeniority;
     this.language = pLanguage;
     this.averageSalary = pAverageSalary;
     this.grossMargin = pGrossMargin;
-    this.currency = pCurrency;
+    this.currency = pCurrency.toUpperCase();
   }
 
   public getTechnology() {
-    return this.technologyId;
+    return this.technologyName;
   }
   public getSeniority() {
     return this.seniority;
