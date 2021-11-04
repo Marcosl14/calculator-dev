@@ -3,7 +3,7 @@ class Technology {
   private name: string;
 
   constructor(name: string) {
-    this.name = name.toUpperCase();
+    this.name = name;
   }
 
   public getId(): string | null {

@@ -29,11 +29,11 @@ class createRateAction {
   private adapt(request: Request): CreateRateCommand {
     return new CreateRateCommand(
       request.body.technology,
-      request.body.seniority,
-      request.body.language,
+      request.body.seniority.toUpperCase(),
+      request.body.language.toUpperCase(),
       request.body.averageSalary,
       request.body.grossMargin,
-      request.body.currency,
+      request.body.currency.toUpperCase(),
     );
   }
 }

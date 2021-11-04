@@ -1,49 +1,49 @@
-import shortid from 'shortid';
 import Rate from '../../domain/entities/rate.entity';
 import Technology from '../../domain/entities/technology.entity';
 import LanguageEnum from '../../domain/enums/language.enum';
 import SeniorityEnum from '../../domain/enums/seniority.enum';
+import searchMethodInterfase from '../../domain/interfaces/search.method.interface';
+import { ratesModel } from '../../index';
+import technologyRepository from './technology.repository';
 
 class RateRepository {
-  private rates: Rate[];
-
-  constructor() {
-    this.rates = [];
+  async findAll(): Promise<Rate[]> {
+    return ratesModel.find({});
   }
 
-  async findOneById(id: string): Promise<Rate | null> {
-    const rate = this.rates.find(r => r.getId() === id);
-    return rate ? rate : null;
+  async findOneById(id: string): Promise<any | null> {
+    return ratesModel.findById(id);
   }
 
-  async filterBy(
-    technology?: string,
-    seniority?: SeniorityEnum,
-    language?: LanguageEnum,
-    currency?: string,
-  ): Promise<Rate[]> {
-    let rates: Array<Rate> = [...this.rates];
-
-    console.log(rates);
-
-    if (technology) {
-      rates = rates.filter(r => r.getTechnology().getName() === technology.toUpperCase());
+  async filterBy(technologyName: string, seniority: string, language: string, currency: string): Promise<Rate[]> {
+    const search: searchMethodInterfase = {
+      technology: null,
+      seniority: null,
+      language: null,
+      currency: null,
+    };
+    if (technologyName) {
+      const technology = await technologyRepository.findOneByName(technologyName.toUpperCase());
+      search.technology = technology;
+    } else {
+      delete search.technology;
     }
     if (seniority) {
-      rates = rates.filter(r => r.getSeniority() === seniority.toUpperCase());
+      search.seniority = seniority.toUpperCase();
+    } else {
+      delete search.seniority;
     }
     if (language) {
-      rates = rates.filter(r => r.getLanguage() === language.toUpperCase());
+      search.language = language.toUpperCase();
+    } else {
+      delete search.language;
     }
     if (currency) {
-      rates = rates.filter(r => r.getCurrency() === currency.toUpperCase());
+      search.currency = currency.toUpperCase();
+    } else {
+      delete search.currency;
     }
-
-    return rates;
-  }
-
-  async findAll(): Promise<Rate[]> {
-    return this.rates;
+    return ratesModel.find(search);
   }
 
   async exists(
@@ -52,32 +52,31 @@ class RateRepository {
     language: LanguageEnum,
     currency: string,
   ): Promise<boolean> {
-    const rate = this.rates.find(
-      r =>
-        r.getTechnology() == technology &&
-        r.getSeniority() == seniority &&
-        r.getLanguage() == language &&
-        r.getCurrency() == currency,
-    );
-    if (rate) {
-      return true;
-    }
-    return false;
+    return ratesModel.exists({ technology, seniority, language, currency });
   }
 
   async save(rate: Rate): Promise<void> {
-    if (!rate.getId()) {
-      rate.setId(shortid.generate());
-      this.rates.push(rate);
-    } else {
-      this.rates = this.rates.map(function (r) {
-        return r.getId() === rate.getId() ? rate : r;
-      });
-    }
+    ratesModel.collection
+      .insertOne({
+        technology: rate.getTechnology(),
+        seniority: rate.getSeniority(),
+        language: rate.getLanguage(),
+        averageSalary: rate.getAverageSalary(),
+        grossMargin: rate.getGrossMargin(),
+        currency: rate.getCurrency(),
+      })
+      .catch(error => console.error(error));
+  }
+
+  async update(id: string, rate: Rate): Promise<void> {
+    await ratesModel.findOneAndUpdate(
+      { id },
+      { averageSalary: rate.getAverageSalary(), grossMargin: rate.getGrossMargin() },
+    );
   }
 
   async deleteById(id: string): Promise<void> {
-    this.rates = this.rates.filter(r => r.getId() !== id);
+    await ratesModel.findByIdAndDelete(id);
   }
 }
 

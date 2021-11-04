@@ -24,7 +24,7 @@ export default class Rate {
     this.language = language;
     this.averageSalary = averageSalary;
     this.grossMargin = grossMargin;
-    this.currency = currency.toUpperCase();
+    this.currency = currency;
   }
 
   public getId(): string | null {
