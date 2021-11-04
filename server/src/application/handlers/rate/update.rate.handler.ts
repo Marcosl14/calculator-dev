@@ -4,16 +4,27 @@ import { UpdateRateCommand } from '../../commands/rate/update.rate.command';
 
 class UpdateRateHandler {
   async execute(command: UpdateRateCommand) {
-    const rate: Rate | null = await rateRepository.findOneById(command.getId());
+    let dbRate: any | null;
 
-    if (!rate) {
+    try {
+      dbRate = await rateRepository.findOneById(command.getId());
+    } catch {
       throw new Error('Rate not found');
     }
+
+    const rate = new Rate(
+      dbRate.technology,
+      dbRate.seniority,
+      dbRate.language,
+      dbRate.averageSalary,
+      dbRate.grossMargin,
+      dbRate.currency,
+    );
 
     rate.setAverageSalary(command.getAverageSalary());
     rate.setGrossMargin(command.getGrossMargin());
 
-    await rateRepository.save(rate);
+    await rateRepository.update(command.getId(), rate);
   }
 }
 
