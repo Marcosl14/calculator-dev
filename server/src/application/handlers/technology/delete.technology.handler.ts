@@ -9,6 +9,7 @@ class DeleteTechnologyHandler {
     if (!technology) {
       throw new Error('Technology not found');
     }
+
     await TechnologyRepository.deleteById(command.getId());
   }
 }
