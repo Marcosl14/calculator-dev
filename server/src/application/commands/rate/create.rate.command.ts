@@ -20,8 +20,8 @@ export class CreateRateCommand {
     this.technologyName = pTechnologyName.toUpperCase();
     this.seniority = pSeniority;
     this.language = pLanguage;
-    this.averageSalary = pAverageSalary;
-    this.grossMargin = pGrossMargin;
+    this.averageSalary = Number(pAverageSalary).toFixed(2);
+    this.grossMargin = Number(pGrossMargin).toFixed(2);
     this.currency = pCurrency.toUpperCase();
   }
 
