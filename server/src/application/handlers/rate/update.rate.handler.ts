@@ -4,11 +4,9 @@ import { UpdateRateCommand } from '../../commands/rate/update.rate.command';
 
 class UpdateRateHandler {
   async execute(command: UpdateRateCommand) {
-    let dbRate: any | null;
+    let dbRate: any | null = await rateRepository.findOneById(command.getId());
 
-    try {
-      dbRate = await rateRepository.findOneById(command.getId());
-    } catch {
+    if (!dbRate) {
       throw new Error('Rate not found');
     }
 
