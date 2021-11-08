@@ -15,7 +15,12 @@ class RateRepository {
     return ratesModel.findById(id);
   }
 
-  async filterBy(technologyId: string, seniority: string, language: string, currency: string): Promise<Rate[]> {
+  async filterBy(
+    technologyId?: string | null,
+    seniority?: string | null,
+    language?: string | null,
+    currency?: string | null,
+  ): Promise<any[]> {
     const search: searchMethodInterfase = {
       technology: null,
       seniority: null,
@@ -80,7 +85,7 @@ class RateRepository {
     );
   }
 
-  async deleteById(id: string): Promise<void> {
+  async deleteById(id: string | null): Promise<void> {
     await ratesModel.findByIdAndDelete(id);
   }
 }
