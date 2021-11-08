@@ -10,14 +10,14 @@ export class CreateRateCommand {
   private currency: string;
 
   constructor(
-    pTechnologyName: string,
+    pTechnologyId: string,
     pSeniority: SeniorityEnum,
     pLanguage: LanguageEnum,
     pAverageSalary: string,
     pGrossMargin: string,
     pCurrency: string,
   ) {
-    this.technologyName = pTechnologyName.toUpperCase();
+    this.technologyName = pTechnologyId.toUpperCase();
     this.seniority = pSeniority;
     this.language = pLanguage;
     this.averageSalary = Number(pAverageSalary).toFixed(2);

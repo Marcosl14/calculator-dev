@@ -15,15 +15,20 @@ class RateRepository {
     return ratesModel.findById(id);
   }
 
-  async filterBy(technologyName: string, seniority: string, language: string, currency: string): Promise<Rate[]> {
+  async filterBy(technologyId: string, seniority: string, language: string, currency: string): Promise<Rate[]> {
     const search: searchMethodInterfase = {
       technology: null,
       seniority: null,
       language: null,
       currency: null,
     };
-    if (technologyName) {
-      const technology = await technologyRepository.findOneByName(technologyName.toUpperCase());
+    if (technologyId) {
+      let technology;
+      try {
+        technology = await technologyRepository.findOneById(technologyId);
+      } catch {
+        throw new Error('Technology not found');
+      }
       search.technology = technology;
     } else {
       delete search.technology;
