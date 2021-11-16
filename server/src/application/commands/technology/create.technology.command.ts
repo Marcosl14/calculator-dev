@@ -2,7 +2,7 @@ export class CreateTechnologyCommand {
   private name: string;
 
   constructor(name: string) {
-    this.name = name.toUpperCase();
+    this.name = name;
   }
 
   public getName() {
