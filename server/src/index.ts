@@ -14,9 +14,7 @@ import TechnologySchema from './infrastructure/repositories/schemas/technology.s
 const app: express.Application = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect(
-  'mongodb+srv://user:marquitos2701@marcoscluster.7gh8q.mongodb.net/calculator-dev?retryWrites=true&w=majority',
-);
+mongoose.connect('mongodb://localhost:27017/calculator-dev');
 const db = mongoose.connection;
 
 db.on('error', function (err) {
